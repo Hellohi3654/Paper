@@ -38,6 +38,7 @@ jobs:
                   git config --global user.name "Github Actions"
                   ./gradlew applyPatches --stacktrace
                   ./gradlew build --stacktrace
+                  dir
                   cd Paper-API
                   mvn clean install
                   cd ..
