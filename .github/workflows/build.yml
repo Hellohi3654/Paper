@@ -36,7 +36,17 @@ jobs:
               run: |
                   git config --global user.email "no-reply@github.com"
                   git config --global user.name "Github Actions"
-                  paper jar
+                  ./scripts/build.sh
+                  cd Paper-API
+                  mvn clean install
+                  cd ..
+                  cd Paper-MojangAPI
+                  mvn clean install
+                  cd ..
+                  cd Paper-Server
+                  mvn clean package
+                  cd ..
+                  echo "Paper jar successfully built"
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
               if: success()
