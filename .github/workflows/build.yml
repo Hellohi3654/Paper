@@ -5,18 +5,8 @@
 # PRs can themselves link to Paperclip jars if it is necessary. Official such
 # PRs will take use of testing builds.
 
-name: Build Paper 2
-
-on: 
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Build without Release'
-        required: true
-        default: 'Build'
-      home:
-        description: 'location'
-        required: false
+name: Build Paper
+on: [push, pull_request]
 
 jobs:
     build:
