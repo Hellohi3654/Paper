@@ -5,8 +5,18 @@
 # PRs can themselves link to Paperclip jars if it is necessary. Official such
 # PRs will take use of testing builds.
 
-name: Build Paper
-on: [push, pull_request]
+name: Build Paper 2
+
+on: 
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Build without Release'
+        required: true
+        default: 'Build'
+      home:
+        description: 'location'
+        required: false
 
 jobs:
     build:
@@ -38,3 +48,9 @@ jobs:
                   git config --global user.name "Github Actions"
                   ./gradlew applyPatches --stacktrace
                   ./gradlew build --stacktrace
+            - name: Archive artifacts
+              uses: actions/upload-artifact@v2
+              if: success()
+              with:
+                name: Paper Build
+                path: Paper-Server/*
