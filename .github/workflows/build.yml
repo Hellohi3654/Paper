@@ -47,6 +47,7 @@ jobs:
                   cd Paper-Server
                   mvn clean package
                   cd ..
+                  dir
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
               if: success()
