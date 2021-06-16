@@ -38,17 +38,6 @@ jobs:
                   git config --global user.name "Github Actions"
                   ./gradlew applyPatches --stacktrace
                   ./gradlew build --stacktrace
-                  dir
-                  cd Paper-API
-                  mvn clean install
-                  cd ..
-                  cd Paper-MojangAPI
-                  mvn clean install
-                  cd ..
-                  cd Paper-Server
-                  mvn clean package
-                  cd ..
-                  dir
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
               if: success()
