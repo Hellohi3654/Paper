@@ -10,7 +10,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
             matrix:
                 java: [16]
@@ -36,8 +36,8 @@ jobs:
               run: |
                   git config --global user.email "no-reply@github.com"
                   git config --global user.name "Github Actions"
-                  paper build
-                  paper jar
+                  ./paper build
+                  ./paper jar
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
               if: success()
