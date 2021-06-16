@@ -11,6 +11,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
+    strategy:
+            matrix:
+                java: [16]
+            fail-fast: true
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
