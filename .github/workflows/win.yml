@@ -36,8 +36,8 @@ jobs:
               run: |
                   git config --global user.email "no-reply@github.com"
                   git config --global user.name "Github Actions"
-                  ./paper build
-                  ./paper jar
+                  paper build
+                  paper jar
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
               if: success()
