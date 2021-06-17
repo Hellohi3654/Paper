@@ -8,10 +8,10 @@ makes it so that the server keeps the last difficulty used instead
 of restoring the server.properties every single load.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 11dbe48c8a8c29cd28d725c43505e326a6e626ff..f87409af9218e8003da370444ea97695023de439 100644
+index 04531db7c26b9defe76d2584d960132ad79dc0fa..ccca42f9a1cd72e7f4fe21bd626b61f06c51e2e7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1711,11 +1711,14 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1721,11 +1721,14 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
      }
  

@@ -5,7 +5,7 @@ Subject: [PATCH] Add entity liquid API
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4965d6beb0486400f5d28220d6e132e2029cf86e..b410001403e4a984e1ea7f5fdb3adc866631e80f 100644
+index 0013f6f793cf70992ec83a454089aa800cd76ef5..6c4c82fb439a07f62668b625b6ba5d552949964d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1339,7 +1339,6 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n

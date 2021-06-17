@@ -5,10 +5,10 @@ Subject: [PATCH] Build system changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 792fea417637493814071850e780e9923d75a637..c255556783133278aaa0720969324f4c870ad7be 100644
+index 393f282ea082772593ae34c0b3d3dcd2ea9e4c52..ffb7b25b01bc26e3234358e39633c7f7578e018d 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -21,21 +21,24 @@ repositories {
+@@ -22,21 +22,24 @@ repositories {
  dependencies {
      implementation(project(":Paper-API"))
      implementation("jline:jline:2.12.1")
@@ -37,23 +37,23 @@ index 792fea417637493814071850e780e9923d75a637..c255556783133278aaa0720969324f4c
      testImplementation("junit:junit:4.13.1")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
  }
-@@ -52,7 +55,8 @@ tasks.jar {
-             "Implementation-Vendor" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Date()), // Paper
+@@ -55,6 +58,7 @@ tasks.jar {
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
--            "Specification-Vendor" to "Bukkit Team"
-+            "Specification-Vendor" to "Bukkit Team",
-+            "Multi-Release" to "true" // Paper
-         ))
-         for (tld in listOf("net", "com", "org")) {
-             attributes(mapOf(
-@@ -72,9 +76,17 @@ configure<PublishingExtension> {
+             "Specification-Vendor" to "Bukkit Team",
++            "Multi-Release" to "true", // Paper
+         )
+         for (tld in setOf("net", "com", "org")) {
+             attributes("$tld/bukkit", "Sealed" to true)
+@@ -72,11 +76,19 @@ publishing {
      }
  }
  
 +val generatePom = tasks.named<GenerateMavenPom>("generatePomFileForMavenPublication")
 +
  tasks.shadowJar {
+     archiveClassifier.set("mojang-mapped")
+ 
 +    // Needed for Paperclip's install to maven local feature
 +    from(generatePom) {
 +        into("META-INF/maven/io.papermc.paper/paper")
@@ -63,11 +63,11 @@ index 792fea417637493814071850e780e9923d75a637..c255556783133278aaa0720969324f4c
      listOf(
 -        "jline", "it.unimi", "org.apache.commons.codec", "org.apache.commons.io",
 +        "jline", "org.apache.commons.codec", "org.apache.commons.io", // Paper - don't relocate fastutil
-         "org.apache.commons.lang3", "org.objectweb.asm"
+         "org.apache.commons.lang3", "org.apache.http", "org.apache.maven", "org.codehaus.plexus",
+         "org.eclipse.aether", "org.eclipse.sisu", "org.objectweb.asm"
      ).forEach { pack ->
-         relocate(pack, "org.bukkit.craftbukkit.libs.$pack")
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index dfe101d9f5db1bd7cfc59dfe9adc9abb643586cc..24e08ca0fca3e87f8a6b7670b266f3c2900b798c 100644
+index b06a4c8f5e1dfcbda171910279d6861dc3d4d2e7..358475974cf7dfced302bdd7d2390bd95848c737 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -190,7 +190,7 @@ public class Main {
@@ -78,7 +78,7 @@ index dfe101d9f5db1bd7cfc59dfe9adc9abb643586cc..24e08ca0fca3e87f8a6b7670b266f3c2
 +                    Date buildDate = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(Main.class.getPackage().getImplementationVendor()); // Paper
  
                      Calendar deadline = Calendar.getInstance();
-                     deadline.add(Calendar.DAY_OF_YEAR, -3);
+                     deadline.add(Calendar.DAY_OF_YEAR, -7);
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 index 93046379d0cefd5d3236fc59e698809acdc18f80..774556a62eb240da42e84db4502e2ed43495be17 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
