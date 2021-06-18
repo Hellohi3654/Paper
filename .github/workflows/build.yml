@@ -39,13 +39,13 @@ jobs:
                   ./gradlew applyPatches --stacktrace
                   ./gradlew build --stacktrace
                   cd Paper-API
-                  mvn clean install
+                  mvn clean install -T 2C
                   cd ..
                   cd Paper-MojangAPI
-                  mvn clean install
+                  mvn clean install -T 2C
                   cd ..
                   cd Paper-Server
-                  mvn clean package
+                  mvn clean package -T 2C
                   cd ..
             - name: Archive artifacts
               uses: actions/upload-artifact@v2
